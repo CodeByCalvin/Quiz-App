@@ -82,7 +82,6 @@ const quizQuestions = [
 let clickSound = new Audio("Pop sound effect.mp3");
 
 /// Selecting elements
-
 const startScreen = document.querySelector(".start-screen");
 const startBtn = document.querySelector(".start-btn");
 const questionTitle = document.querySelector(".question-title");
@@ -100,6 +99,7 @@ const progressBar = document.querySelector(".progress-bar");
 const progressBarActive = document.querySelector(".progress-bar-active");
 
 let currentQuestion = 0;
+let userAnswers = [];
 
 startBtn.addEventListener("click", () => {
   // clickSound.play();
@@ -113,14 +113,15 @@ startBtn.addEventListener("click", () => {
 });
 
 answers.forEach((answer) => {
-  answer.addEventListener("click", () => {
+  answer.addEventListener("click", (e) => {
     // clickSound.play();
     currentQuestion++;
+    let answerLetter = e.currentTarget.getAttribute("answer");
+    userAnswers.push(answerLetter);
     displayQuestion();
   });
 });
 
-// Functions
 function displayQuestion() {
   // Title and answers fade in
   questionTitle.classList.add("fade-in");

@@ -64,6 +64,13 @@ span {
   flex-direction: column;
 }
 
+.start-title {
+  font-size: 3.2rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  padding: 2rem;
+}
+
 .start-btn {
   background-color: #51cf66;
   color: #fff;
