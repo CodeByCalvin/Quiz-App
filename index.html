@@ -35,11 +35,14 @@
   </head>
   <body>
     <div class="app">
-      <div class="app-background container">
-        <div class="question-box">
-          <div class="question-number">1/10</div>
+      <div class="app-background container flex-center">
+        <div class="question-box flex-center">
+          <div class="question-box-header">
+            <div class="question-number">1/10</div>
+          </div>
+
           <div class="question-title">Example question</div>
-          <div class="question-answers">
+          <div class="question-answers flex-center">
             <button class="answer">
               <div class="answer-letter letter-a">A</div>
               <div class="answer-text text-a">
@@ -64,8 +67,11 @@
                 This is example text for an answer
               </div>
             </button>
+
+            <div class="progress-bar">
+              <div class="progress-bar-active"></div>
+            </div>
           </div>
-          <div class="timer-bar"></div>
         </div>
       </div>
     </div>
