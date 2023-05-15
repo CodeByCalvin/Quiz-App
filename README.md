@@ -1,8 +1,8 @@
 # TDA Project 2: Quiz app
 
-**Live demo: https://codebycalvin.github.io/TDA-Project-1-Hobby-Website/**
+**Live demo: PENDING**
 
-![A screenshot of the hero page of a houseplant hobby website](--)    
+<!-- ![A screenshot of the hero page of a houseplant hobby website](--)     -->
 
 <h2>Project Brief</h2>
 
