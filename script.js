@@ -79,9 +79,15 @@ const quizQuestions = [
   },
 ];
 
+let clickSound = new Audio("Pop sound effect.mp3");
+
 /// Selecting elements
+
+const startScreen = document.querySelector(".start-screen");
+const startBtn = document.querySelector(".start-btn");
 const questionTitle = document.querySelector(".question-title");
 const questionText = document.querySelector(".question-text");
+const questionBox = document.querySelector(".question-box");
 const answers = document.querySelectorAll(".answer");
 
 const answerAText = document.querySelector(".text-a");
@@ -95,8 +101,32 @@ const progressBarActive = document.querySelector(".progress-bar-active");
 
 let currentQuestion = 0;
 
+startBtn.addEventListener("click", () => {
+  // clickSound.play();
+  startBtn.classList.add("fade-out");
+  setTimeout(() => {
+    // startBtn.style.display = "none";
+    startScreen.classList.add("hide");
+    questionBox.classList.remove("hide");
+    displayQuestion();
+  }, 500);
+});
+
+answers.forEach((answer) => {
+  answer.addEventListener("click", () => {
+    // clickSound.play();
+    currentQuestion++;
+    displayQuestion();
+  });
+});
+
 // Functions
 function displayQuestion() {
+  // Title and answers fade in
+  questionTitle.classList.add("fade-in");
+  answers.forEach((answer) => answer.classList.add("fade-in"));
+
+  // Display question and answers
   questionTitle.innerHTML = quizQuestions[currentQuestion].question;
   answerAText.innerHTML = quizQuestions[currentQuestion].answerA;
   answerBText.innerHTML = quizQuestions[currentQuestion].answerB;
@@ -104,13 +134,10 @@ function displayQuestion() {
   answerDText.innerHTML = quizQuestions[currentQuestion].answerD;
   questionNumber.innerHTML = `${currentQuestion + 1} / ${quizQuestions.length}`;
   progressBarActive.style.width = `${currentQuestion * 10}%`;
+
+  // Remove fade-in class after 1 second
+  setTimeout(() => {
+    questionTitle.classList.remove("fade-in");
+    answers.forEach((answer) => answer.classList.remove("fade-in"));
+  }, 1000);
 }
-
-displayQuestion();
-
-answers.forEach((answer) => {
-  answer.addEventListener("click", () => {
-    currentQuestion++;
-    displayQuestion();
-  });
-});
