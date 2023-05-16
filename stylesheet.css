@@ -84,7 +84,7 @@ span {
   transition: all 0.3s ease;
 }
 
-.start-button:hover {
+.start-btn:hover {
   background-color: #4ac15e;
 }
 
