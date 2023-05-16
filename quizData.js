@@ -68,7 +68,7 @@ export const quizQuestions = [
     answerB: "I prefer games that reward me with faster cars and new tracks.",
     answerC: "I like games that reward precision and tactical skills.",
     answerD:
-      "I enjoy games that reward exploration and quest completion with new items and abilities.",
+      "I enjoy games that reward exploration and quests with new unlocks.",
   },
   {
     question: "What level of interaction do you prefer with other players?",

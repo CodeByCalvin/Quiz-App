@@ -19,13 +19,17 @@ const resultTitle = document.querySelector(".result-title");
 const resultsDescription = document.querySelector(".results-description");
 const resultsGame = document.querySelector(".results-game");
 const resultsImg = document.querySelector(".results-img");
+const restartBtn = document.querySelector(".restart-btn");
 
 const questionNumber = document.querySelector(".question-number");
 const progressBar = document.querySelector(".progress-bar");
 const progressBarActive = document.querySelector(".progress-bar-active");
 
-let currentQuestion = 0;
 let userAnswers = [];
+let gameState = {
+  currentQuestion: 0,
+  userAnswers: [],
+};
 
 /////////////////////////////// START QUIZ ///////////////////////////////
 
@@ -43,10 +47,13 @@ startBtn.addEventListener("click", () => {
 answers.forEach((answer) => {
   answer.addEventListener("click", (e) => {
     // clickSound.play();
-    currentQuestion++;
+    gameState.currentQuestion++;
     let answerLetter = e.currentTarget.getAttribute("answer");
     userAnswers.push(answerLetter);
-    if (currentQuestion < quizQuestions.length && currentQuestion < 10) {
+    if (
+      gameState.currentQuestion < quizQuestions.length &&
+      gameState.currentQuestion < 10
+    ) {
       displayQuestion();
     } else {
       displayResults();
@@ -60,13 +67,15 @@ function displayQuestion() {
   answers.forEach((answer) => answer.classList.add("fade-in"));
 
   // Display question and answers
-  questionTitle.innerHTML = quizQuestions[currentQuestion].question;
-  answerAText.innerHTML = quizQuestions[currentQuestion].answerA;
-  answerBText.innerHTML = quizQuestions[currentQuestion].answerB;
-  answerCText.innerHTML = quizQuestions[currentQuestion].answerC;
-  answerDText.innerHTML = quizQuestions[currentQuestion].answerD;
-  questionNumber.innerHTML = `${currentQuestion + 1} / ${quizQuestions.length}`;
-  progressBarActive.style.width = `${(currentQuestion + 1) * 10}%`;
+  questionTitle.innerHTML = quizQuestions[gameState.currentQuestion].question;
+  answerAText.innerHTML = quizQuestions[gameState.currentQuestion].answerA;
+  answerBText.innerHTML = quizQuestions[gameState.currentQuestion].answerB;
+  answerCText.innerHTML = quizQuestions[gameState.currentQuestion].answerC;
+  answerDText.innerHTML = quizQuestions[gameState.currentQuestion].answerD;
+  questionNumber.innerHTML = `${gameState.currentQuestion + 1} / ${
+    quizQuestions.length
+  }`;
+  progressBarActive.style.width = `${(gameState.currentQuestion + 1) * 10}%`;
 
   // Remove fade-in class after 1 second
   setTimeout(() => {
@@ -77,7 +86,7 @@ function displayQuestion() {
 
 // userAnswers = ["D", "D", "C", "B", "D"];
 
-// currentQuestion = 9;
+// gameState.currentQuestion = 9;
 
 /////////////////////////////// SHOW RESULTS ///////////////////////////////
 
@@ -147,3 +156,28 @@ function displayResults() {
   // Display result description
   resultsDescription.innerHTML = resultsGameObj.description;
 }
+
+function updateDisplay() {
+  startScreen.classList.add("hide");
+  questionBox.classList.add("hide");
+  resultsScreen.classList.add("hide");
+
+  if (gameState.currentQuestion === 0) {
+    startScreen.classList.remove("hide");
+  } else if (gameState.currentQuestion < 10) {
+    startScreen.classList.add("hide");
+    questionBox.classList.remove("hide");
+  } else {
+    startScreen.classList.add("hide");
+    questionBox.classList.add("hide");
+    resultsScreen.classList.remove("hide");
+  }
+}
+
+updateDisplay();
+
+restartBtn.addEventListener("click", () => {
+  gameState.currentQuestion = 0;
+  gameState.userAnswers = [];
+  updateDisplay();
+});
