@@ -1,8 +1,10 @@
 # TDA Project 2: Quiz app
 
-**Live demo: PENDING**
+**Live demo: https://codebycalvin.github.io/Quiz-App/**
 
-<!-- ![A screenshot of the hero page of a houseplant hobby website](--)     -->
+![Start menu of Quiz App](https://i.imgur.com/A5mxROB.png)    
+![Question menu of Quiz App](https://i.imgur.com/68XK3qx.png)     
+![Results screen of Quiz App](https://i.imgur.com/WpvyAGb.png)    
 
 <h2>Project Brief</h2>
 
