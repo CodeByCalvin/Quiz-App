@@ -52,6 +52,7 @@ body {
 
 span {
   color: #54aef4;
+  font-weight: 500;
 }
 
 .start-screen {
@@ -67,9 +68,16 @@ span {
 .start-title {
   font-size: 3.2rem;
   font-weight: 400;
-  margin-bottom: 2rem;
   padding: 2rem;
   text-align: center;
+}
+
+.start-text {
+  font-size: 2.4rem;
+  font-weight: 400;
+  margin-bottom: 3.4rem;
+  text-align: center;
+  line-height: 1.2;
 }
 
 .start-btn,
@@ -84,6 +92,7 @@ span {
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-bottom: 2rem;
 }
 
 .start-btn:hover,
@@ -97,6 +106,7 @@ span {
 .question-box-header {
   display: flex;
   width: 100%;
+  margin-bottom: 2rem;
 }
 
 .question-box {
@@ -190,6 +200,7 @@ span {
   border-radius: 0.5rem;
   width: 100%;
   overflow: hidden;
+  margin-top: 2rem;
 }
 
 .progress-bar-active {
@@ -216,14 +227,13 @@ span {
   font-weight: 500;
   padding: 2rem;
   text-align: center;
-  margin-bottom: 1.4rem;
 }
 
 .results-description {
   font-size: 2rem;
   font-weight: 400;
-  text-align: center;
   margin-bottom: 2rem;
+  padding: 0 2rem;
 }
 
 .results-game {
