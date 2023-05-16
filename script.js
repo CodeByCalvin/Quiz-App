@@ -182,7 +182,7 @@ function displayQuestion() {
   answerCText.innerHTML = quizQuestions[currentQuestion].answerC;
   answerDText.innerHTML = quizQuestions[currentQuestion].answerD;
   questionNumber.innerHTML = `${currentQuestion + 1} / ${quizQuestions.length}`;
-  progressBarActive.style.width = `${currentQuestion * 10}%`;
+  progressBarActive.style.width = `${(currentQuestion + 1) * 10}%`;
 
   // Remove fade-in class after 1 second
   setTimeout(() => {
