@@ -1,3 +1,5 @@
+/////////////////////////////// STORED DATA ///////////////////////////////
+
 const quizQuestions = [
   {
     question: "What is your preferred game genre?",
@@ -79,20 +81,60 @@ const quizQuestions = [
   },
 ];
 
+const quizResults = [
+  {
+    result: "MMORPG",
+    description:
+      "You enjoy immersing yourself in a vast world with other players. You like to build your character and progress through the game at your own pace. You enjoy the social aspect of the game and interacting with other players.",
+    image: "imgs/OSRSlogo.jpeg",
+    game: "OldSchool Runescape",
+  },
+
+  {
+    result: "Racing",
+    description:
+      "You enjoy fast-paced, competitive games with friends. You like to compete against others in intense matches. You enjoy the thrill of racing and the challenge of mastering the tracks.",
+    image: "imgs/MarioKartLogo.jpeg",
+    game: "Mario Kart",
+  },
+
+  {
+    result: "First-person Shooter",
+    description:
+      "You enjoy competitive games with fast-paced action. You like to compete against others online in intense matches. You enjoy the thrill of combat and the challenge of mastering the weapons.",
+    image: "imgs/CallOfDutyLogo.jpeg",
+    game: "Call of Duty",
+  },
+  {
+    result: "Action Role-Playing",
+    description:
+      "You enjoy a single-player experience with a rich storyline. You like to immerse yourself in a fantasy world with various landscapes and creatures. You enjoy the thrill of exploration and the challenge of completing quests.",
+    image: "imgs/SkyrimLogo.jpeg",
+    game: "Skyrim",
+  },
+];
+
 let clickSound = new Audio("Pop sound effect.mp3");
 
-/// Selecting elements
+/////////////////////////////// SELECTING ELEMENTS ///////////////////////////////
+
 const startScreen = document.querySelector(".start-screen");
 const startBtn = document.querySelector(".start-btn");
+
 const questionTitle = document.querySelector(".question-title");
 const questionText = document.querySelector(".question-text");
 const questionBox = document.querySelector(".question-box");
 const answers = document.querySelectorAll(".answer");
-
 const answerAText = document.querySelector(".text-a");
 const answerBText = document.querySelector(".text-b");
 const answerCText = document.querySelector(".text-c");
 const answerDText = document.querySelector(".text-d");
+
+const resultsScreen = document.querySelector(".results-screen");
+const resultTitle = document.querySelector(".result-title");
+const resultsDescription = document.querySelector(".results-description");
+const resultsGame = document.querySelector(".results-game");
+const resultsImg = document.querySelector(".results-img");
 
 const questionNumber = document.querySelector(".question-number");
 const progressBar = document.querySelector(".progress-bar");
@@ -100,6 +142,8 @@ const progressBarActive = document.querySelector(".progress-bar-active");
 
 let currentQuestion = 0;
 let userAnswers = [];
+
+/////////////////////////////// START QUIZ ///////////////////////////////
 
 startBtn.addEventListener("click", () => {
   // clickSound.play();
@@ -118,7 +162,11 @@ answers.forEach((answer) => {
     currentQuestion++;
     let answerLetter = e.currentTarget.getAttribute("answer");
     userAnswers.push(answerLetter);
-    displayQuestion();
+    if (currentQuestion < quizQuestions.length && currentQuestion < 10) {
+      displayQuestion();
+    } else {
+      displayResults();
+    }
   });
 });
 
@@ -141,4 +189,77 @@ function displayQuestion() {
     questionTitle.classList.remove("fade-in");
     answers.forEach((answer) => answer.classList.remove("fade-in"));
   }, 1000);
+}
+
+// userAnswers = ["D", "D", "C", "B", "D"];
+
+// currentQuestion = 9;
+
+/////////////////////////////// SHOW RESULTS ///////////////////////////////
+
+function displayResults() {
+  //////////// Hide question box
+  questionBox.classList.add("hide");
+  //////////// Calculate the result
+  function calculateResults() {
+    let counts = { A: 0, B: 0, C: 0, D: 0 };
+
+    // Count the frequency of each answer
+    for (let i = 0; i < userAnswers.length; i++) {
+      let answer = userAnswers[i];
+      if (counts[answer]) {
+        counts[answer]++;
+      } else {
+        counts[answer] = 1;
+      }
+    }
+
+    // Find the answer with the highest frequency
+    let mostFrequentAnswer = Object.keys(counts).reduce((a, b) =>
+      counts[a] > counts[b] ? a : b
+    );
+
+    // Map the most frequent answer to the corresponding result
+    let result;
+    switch (mostFrequentAnswer) {
+      case "A":
+        result = "OldSchool Runescape";
+        break;
+      case "B":
+        result = "Mario Kart";
+        break;
+      case "C":
+        result = "Call of Duty";
+        break;
+      case "D":
+        result = "Skyrim";
+        break;
+      default:
+        result =
+          "We're not sure what you want to play. Here are some suggestions you may want to look at: OSRS, Mario Kart, Call of Duty, Skyrim.";
+    }
+
+    return result;
+  }
+
+  //////////// Display the result
+  let result = calculateResults();
+  let resultsGameObj = quizResults.find(
+    (quizResult) => quizResult.game === result
+  );
+
+  // Display window
+  questionBox.classList.add("hide");
+  resultsScreen.classList.remove("hide");
+
+  // Display result text
+  resultsGame.innerHTML = `You should play
+  <span>${result}</span>
+  next!`;
+
+  // Display result image
+  resultsImg.src = resultsGameObj.image;
+
+  // Display result description
+  resultsDescription.innerHTML = resultsGameObj.description;
 }
