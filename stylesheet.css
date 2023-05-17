@@ -243,6 +243,7 @@ span {
   width: 10rem;
   height: 10rem;
   animation: spin 2s linear infinite;
+  margin-bottom: 0.8rem;
 }
 
 @keyframes spin {
