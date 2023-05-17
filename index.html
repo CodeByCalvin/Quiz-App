@@ -44,7 +44,7 @@
   <body>
     <div class="app">
       <div class="app-background container flex-center">
-        <div class="start-screen flex-center">
+        <div class="start-screen flex-center hide">
           <div class="question-box-header"></div>
 
           <div class="start-title">
@@ -56,6 +56,14 @@
             quiz to get a tailored suggestion!
           </div>
           <button class="start-btn">Start</button>
+        </div>
+
+        <div class="loading-screen flex-center hide">
+          <div class="loading-title">Your results</div>
+          <div class="loading-description">
+            Please wait while your results are being generated...
+          </div>
+          <div class="loader-animation"></div>
         </div>
 
         <div class="results-screen flex-center hide">

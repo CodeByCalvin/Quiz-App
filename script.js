@@ -14,6 +14,8 @@ const answerBText = document.querySelector(".text-b");
 const answerCText = document.querySelector(".text-c");
 const answerDText = document.querySelector(".text-d");
 
+const loadingScreen = document.querySelector(".loading-screen");
+
 const resultsScreen = document.querySelector(".results-screen");
 const resultTitle = document.querySelector(".result-title");
 const resultsDescription = document.querySelector(".results-description");
@@ -33,34 +35,40 @@ let gameState = {
 
 /////////////////////////////// START QUIZ ///////////////////////////////
 
+// Reset game state and display start screen
+function resetGameState() {
+  gameState.currentQuestion = 0;
+  gameState.userAnswers = [];
+  startScreen.classList.remove("hide");
+  questionBox.classList.add("hide");
+  resultsScreen.classList.add("hide");
+}
+
+function updateDisplay() {
+  resetGameState();
+  if (gameState.currentQuestion > 0 && gameState.currentQuestion < 10) {
+    startScreen.classList.add("hide");
+    questionBox.classList.remove("hide");
+  } else if (gameState.currentQuestion === 10) {
+    startScreen.classList.add("hide");
+    questionBox.classList.add("hide");
+    resultsScreen.classList.remove("hide");
+  }
+}
+
+updateDisplay();
+
+// Start button
 startBtn.addEventListener("click", () => {
-  // clickSound.play();
   startBtn.classList.add("fade-out");
   setTimeout(() => {
-    // startBtn.style.display = "none";
     startScreen.classList.add("hide");
     questionBox.classList.remove("hide");
     displayQuestion();
   }, 500);
 });
 
-answers.forEach((answer) => {
-  answer.addEventListener("click", (e) => {
-    // clickSound.play();
-    gameState.currentQuestion++;
-    let answerLetter = e.currentTarget.getAttribute("answer");
-    userAnswers.push(answerLetter);
-    if (
-      gameState.currentQuestion < quizQuestions.length &&
-      gameState.currentQuestion < 10
-    ) {
-      displayQuestion();
-    } else {
-      displayResults();
-    }
-  });
-});
-
+// Display question
 function displayQuestion() {
   // Title and answers fade in
   questionTitle.classList.add("fade-in");
@@ -84,15 +92,41 @@ function displayQuestion() {
   }, 1000);
 }
 
-// userAnswers = ["D", "D", "C", "B", "D"];
+// Answer buttons
+answers.forEach((answer) => {
+  answer.addEventListener("click", (e) => {
+    gameState.currentQuestion++;
+    let answerLetter = e.currentTarget.getAttribute("answer");
+    userAnswers.push(answerLetter);
+    if (
+      gameState.currentQuestion < quizQuestions.length &&
+      gameState.currentQuestion < 10
+    ) {
+      displayQuestion();
+    } else {
+      questionBox.classList.add("hide");
+      showLoadingScreen();
+    }
+  });
+});
 
-// gameState.currentQuestion = 9;
+/////////////////////////////// RESULTS ///////////////////////////////
 
-/////////////////////////////// SHOW RESULTS ///////////////////////////////
+// Loading screen for results
+function showLoadingScreen() {
+  loadingScreen.classList.remove("hide");
 
+  setTimeout(() => {
+    loadingScreen.classList.add("hide");
+    displayResults();
+  }, 2000);
+}
+
+// Displaying the results
 function displayResults() {
   //////////// Hide question box
   questionBox.classList.add("hide");
+
   //////////// Calculate the result
   function calculateResults() {
     let counts = { A: 0, B: 0, C: 0, D: 0 };
@@ -141,43 +175,19 @@ function displayResults() {
     (quizResult) => quizResult.game === result
   );
 
-  // Display window
+  // Display result information
   questionBox.classList.add("hide");
   resultsScreen.classList.remove("hide");
 
-  // Display result text
   resultsGame.innerHTML = `You should play
   <span>${result}</span>
   next!`;
 
-  // Display result image
   resultsImg.src = resultsGameObj.image;
-
-  // Display result description
   resultsDescription.innerHTML = resultsGameObj.description;
 }
 
-function updateDisplay() {
-  startScreen.classList.add("hide");
-  questionBox.classList.add("hide");
-  resultsScreen.classList.add("hide");
-
-  if (gameState.currentQuestion === 0) {
-    startScreen.classList.remove("hide");
-  } else if (gameState.currentQuestion < 10) {
-    startScreen.classList.add("hide");
-    questionBox.classList.remove("hide");
-  } else {
-    startScreen.classList.add("hide");
-    questionBox.classList.add("hide");
-    resultsScreen.classList.remove("hide");
-  }
-}
-
-updateDisplay();
-
 restartBtn.addEventListener("click", () => {
-  gameState.currentQuestion = 0;
-  gameState.userAnswers = [];
+  resetGameState();
   updateDisplay();
 });
