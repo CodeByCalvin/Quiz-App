@@ -2,16 +2,13 @@
 
 **Live demo: https://codebycalvin.github.io/Quiz-App/**
 
-![Start menu of Quiz App](https://i.imgur.com/A5mxROB.png)    
-![Question menu of Quiz App](https://i.imgur.com/68XK3qx.png)     
-![Results screen of Quiz App](https://i.imgur.com/WpvyAGb.png)    
+![Start menu of Quiz App](https://i.imgur.com/ApOjJdu.gif)    
+![Question menu of Quiz App](https://i.imgur.com/HdiMvU9.gif)     
+![Results screen of Quiz App](https://i.imgur.com/k5WGEfe.gif)    
 
 <h2>Project Brief</h2>
 
-The aim of this project is to create a quiz that will ask a series of questions and produce a result on completion of all the questions.
-<br>The quiz can take the form of “mostly a’s” type scoring (although this should be calculated automatically for the user rather than relying on them adding it up) or can use a more complex scoring system to calculate the result.
-<br>You can use the provided personality quiz to provide the questions and result or you can be more creative and make something like this (Harry Potter sorting hat quiz).
-<br>Extra bragging rights will be awarded for creativity in the subject and presentation of your quiz.
+The aim of this project is to create a quiz that will ask a series of questions and produce a result on completion of all the questions. The quiz can take the form of “mostly a’s” type scoring (although this should be calculated automatically for the user rather than relying on them adding it up) or can use a more complex scoring system to calculate the result. You can use the provided personality quiz to provide the questions and result or you can be more creative and make something like this (Harry Potter sorting hat quiz). Extra bragging rights will be awarded for creativity in the subject and presentation of your quiz.
 
 <h2>Your Project</h2>
 
