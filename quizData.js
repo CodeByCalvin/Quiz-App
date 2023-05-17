@@ -102,7 +102,7 @@ export const quizResults = [
     result: "First-person Shooter",
     description:
       "You enjoy competitive games with fast-paced action. You like to compete against others online in intense matches. You enjoy the thrill of combat and the challenge of mastering the weapons.",
-    image: "imgs/CallOfDutyLogo.jpeg",
+    image: "imgs/CallofDutyLogo.jpeg",
     game: "Call of Duty",
   },
   {
