@@ -100,7 +100,7 @@ function undoAnswer() {
  */
 
 function updateDisplay() {
-  if (gameState.currentQuestion === 1) {
+  if (gameState.currentQuestion === 0) {
     showScreen(startScreen);
   } else if (gameState.currentQuestion > 0 && gameState.currentQuestion < 10) {
     showScreen(questionBox);
