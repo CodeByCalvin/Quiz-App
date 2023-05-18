@@ -11,6 +11,7 @@ const resultsScreen = document.querySelector(".results-screen");
 // Button elements
 const startBtn = document.querySelector(".start-btn");
 const restartBtn = document.querySelector(".restart-btn");
+const undoBtn = document.querySelector(".undo-btn");
 const answers = document.querySelectorAll(".answer");
 
 // Question elements
@@ -31,7 +32,6 @@ const questionNumber = document.querySelector(".question-number");
 const progressBar = document.querySelector(".progress-bar");
 const progressBarActive = document.querySelector(".progress-bar-active");
 
-let userAnswers = [];
 let gameState = {
   currentQuestion: 0,
   userAnswers: [],
@@ -41,7 +41,7 @@ let gameState = {
 
 // Reset game state and display start screen
 function resetGameState() {
-  gameState.currentQuestion = 0;
+  gameState.currentQuestion = 1;
   gameState.userAnswers = [];
 }
 
@@ -60,10 +60,18 @@ function hideScreen(screen) {
 
 /////////////////////////////// START QUIZ ///////////////////////////////
 
+/**
+ * Starts the quiz by resetting the game state
+ * Hides the start screen, showing the question screen
+ * Displays the first question.
+ */
+
 function startQuiz() {
+  resetGameState();
   hideScreen(startScreen);
   showScreen(questionBox);
   displayQuestion();
+  undoBtn.classList.add("invisible");
 }
 
 // Start button
@@ -74,33 +82,64 @@ startBtn.addEventListener("click", () => {
   }, 500);
 });
 
+undoBtn.addEventListener("click", () => {
+  undoAnswer();
+  updateDisplay();
+});
+
+function undoAnswer() {
+  gameState.currentQuestion--;
+  gameState.userAnswers.pop();
+}
+
+/**
+ * Updates the screen based on the current question.
+ * If it's the first question, it shows the start screen.
+ * If it's between the first and last question, it shows the question screen.
+ * If it's after the last question, it shows the results screen.
+ */
+
 function updateDisplay() {
-  resetGameState();
-  if (gameState.currentQuestion > 0 && gameState.currentQuestion < 10) {
-    showScreen(questionBox);
-  } else if (gameState.currentQuestion === 10) {
-    showScreen(resultsScreen);
-  } else {
+  if (gameState.currentQuestion === 1) {
     showScreen(startScreen);
+  } else if (gameState.currentQuestion > 0 && gameState.currentQuestion < 10) {
+    showScreen(questionBox);
+    displayQuestion();
+  } else if (gameState.currentQuestion === 10 + 1) {
+    showScreen(resultsScreen);
   }
 }
 
-// Display question
+/**
+ * Display question function
+ * Displays the current question and possible answers in the quiz.
+ * It updates the question, answers, question number, and progress bar.
+ * It also handles the visibility of the 'undo' button.
+ * This function does not take any parameters or return any values.
+ */
+
 function displayQuestion() {
+  const currentQuestion = quizQuestions[gameState.currentQuestion - 1];
+
+  // Undo button
+  if (gameState.currentQuestion > 0) {
+    undoBtn.classList.remove("invisible");
+  } else {
+    undoBtn.classList.add("invisible");
+  }
+
   // Title and answers fade in
   questionTitle.classList.add("fade-in");
   answers.forEach((answer) => answer.classList.add("fade-in"));
 
   // Display question and answers
-  questionTitle.innerHTML = quizQuestions[gameState.currentQuestion].question;
-  answerAText.innerHTML = quizQuestions[gameState.currentQuestion].answerA;
-  answerBText.innerHTML = quizQuestions[gameState.currentQuestion].answerB;
-  answerCText.innerHTML = quizQuestions[gameState.currentQuestion].answerC;
-  answerDText.innerHTML = quizQuestions[gameState.currentQuestion].answerD;
-  questionNumber.innerHTML = `${gameState.currentQuestion + 1} / ${
-    quizQuestions.length
-  }`;
-  progressBarActive.style.width = `${gameState.currentQuestion * 10}%`;
+  questionTitle.innerHTML = currentQuestion.question;
+  answerAText.innerHTML = currentQuestion.answerA;
+  answerBText.innerHTML = currentQuestion.answerB;
+  answerCText.innerHTML = currentQuestion.answerC;
+  answerDText.innerHTML = currentQuestion.answerD;
+  questionNumber.innerHTML = `${gameState.currentQuestion} / ${quizQuestions.length}`;
+  progressBarActive.style.width = `${(gameState.currentQuestion - 1) * 10}%`;
 
   // Remove fade-in class after 1 second
   setTimeout(() => {
@@ -112,15 +151,13 @@ function displayQuestion() {
 // Answer buttons
 answers.forEach((answer) => {
   answer.addEventListener("click", (e) => {
-    gameState.currentQuestion++;
     let answerLetter = e.currentTarget.getAttribute("answer");
     gameState.userAnswers.push(answerLetter);
-    if (
-      gameState.currentQuestion < quizQuestions.length &&
-      gameState.currentQuestion < 10
-    ) {
+
+    if (gameState.currentQuestion < quizQuestions.length) {
+      gameState.currentQuestion++;
       displayQuestion();
-    } else {
+    } else if (gameState.currentQuestion === quizQuestions.length) {
       questionBox.classList.add("hide");
       showLoadingScreen();
     }
@@ -141,6 +178,13 @@ function showLoadingScreen() {
 
 // Displaying the results
 function displayResults() {
+  /**
+   * Calculates the results of the quiz based on the user's answers.
+   * It counts the frequency of each answer and returns the most frequent one.
+   * If there is a tie, it returns a message stating that there might not be a game for the user.
+   * It also returns the corresponding result and description.
+   */
+
   //////////// Calculate the result
   function calculateResults() {
     let counts = { A: 0, B: 0, C: 0, D: 0 };

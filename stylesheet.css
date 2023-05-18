@@ -48,6 +48,10 @@ body {
   display: none;
 }
 
+.invisible {
+  visibility: hidden;
+}
+
 /* ***** START ***** */
 
 span {
@@ -134,7 +138,7 @@ span {
 }
 
 .question-answers {
-  margin-bottom: 4rem;
+  margin-bottom: 2.4rem;
   flex-direction: column;
 }
 
@@ -194,13 +198,34 @@ span {
   z-index: 1;
 }
 
+.question-footer {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.undo-btn,
+.undo-btn-icon {
+  width: 3.4rem;
+  height: 3.4rem;
+  background-color: transparent;
+  border: none;
+  transition: all 0.3s ease;
+  color: var(--background-dark);
+}
+
+.undo-btn:hover,
+.undo-btn-icon:hover {
+  transform: scale(1.15);
+  color: #54aef4;
+}
+
 .progress-bar {
   height: 0.5rem;
   background-color: var(--background-light);
   border-radius: 0.5rem;
   width: 100%;
   overflow: hidden;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .progress-bar-active {
