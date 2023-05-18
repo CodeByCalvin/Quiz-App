@@ -145,7 +145,8 @@ function displayResults() {
   function calculateResults() {
     let counts = { A: 0, B: 0, C: 0, D: 0 };
 
-    // Count the frequency of each answer
+    // Count the frequency of each answer and stores it in the counts object
+    // If not found, add to obj and set the count to 1
     for (let i = 0; i < gameState.userAnswers.length; i++) {
       let answer = gameState.userAnswers[i];
       if (counts[answer]) {
@@ -155,31 +156,36 @@ function displayResults() {
       }
     }
 
-    // Find the answer with the highest frequency
-    let mostFrequentAnswer = Object.keys(counts).reduce((a, b) =>
-      counts[a] > counts[b] ? a : b
+    // Returns the most frequent answer
+    let highestCount = Math.max(...Object.values(counts));
+
+    // Returns the options which have the highest count
+    let highestAnswers = Object.keys(counts).filter(
+      (answer) => counts[answer] === highestCount
     );
 
     // Map the most frequent answer to the corresponding result
     let result;
-    switch (mostFrequentAnswer) {
-      case "A":
-        result = "OldSchool Runescape";
-        break;
-      case "B":
-        result = "Mario Kart";
-        break;
-      case "C":
-        result = "Call of Duty";
-        break;
-      case "D":
-        result = "Skyrim";
-        break;
-      default:
-        result =
-          "We're not sure what you want to play. Here are some suggestions you may want to look at: OSRS, Mario Kart, Call of Duty, Skyrim.";
+    // If there is more than one most frequent answer, return this
+    if (highestAnswers.length > 1) {
+      result = "Perhaps there's just not a game for you.";
+    } else {
+      // If there is no tie (I.e. there is one option with the highest count), run this
+      switch (highestAnswers[0]) {
+        case "A":
+          result = "OldSchool Runescape";
+          break;
+        case "B":
+          result = "Mario Kart";
+          break;
+        case "C":
+          result = "Call of Duty";
+          break;
+        case "D":
+          result = "Skyrim";
+          break;
+      }
     }
-
     return result;
   }
 
@@ -193,10 +199,13 @@ function displayResults() {
   questionBox.classList.add("hide");
   resultsScreen.classList.remove("hide");
 
-  resultsGame.innerHTML = `You should play
+  if (result === "Perhaps there's just not a game for you.") {
+    resultsGame.innerHTML = "Perhaps there's just not a game for you.";
+  } else {
+    resultsGame.innerHTML = `You should play
   <span>${result}</span>
   next!`;
-
+  }
   resultsImg.src = resultsGameObj.image;
   resultsDescription.innerHTML = resultsGameObj.description;
 }
