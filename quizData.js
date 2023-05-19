@@ -116,7 +116,7 @@ export const quizResults = [
     result: "We're not sure what you like.",
     description:
       "We're not sure what you want to play. Here are some suggestions you may want to look at: OSRS, Mario Kart, Call of Duty, Skyrim. If you would like to try again, you may want to consider making your answers more consistent.",
-    image: "/imgs/ConfusedFace.png",
+    image: "imgs/ConfusedFace.png",
     game: "Perhaps there's just not a game for you.",
   },
 ];
